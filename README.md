@@ -1,5 +1,3 @@
-// main function with header files
-
 #include<stdio.h>
 #include<stdlib.h>
 #include<unistd.h>
@@ -19,27 +17,62 @@ void customer(void *arg);
  
 int main(int argc,char *argv[])
 {
-pthread_t id1,id2;
-int status=0;
-end_time=time(NULL)+20;/*Barber Shop Hours is 20s*/
+	pthread_t id1,id2;
+	int status=0;
+	end_time=time(NULL)+20;/*Barber Shop Hours is 20s*/
  
-/*Semaphore initialization*/
-sem_init(&mutex,0,1);
-sem_init(&customers,0,0);
-sem_init(&barbers,0,1);
+	/*Semaphore initialization*/
+	sem_init(&mutex,0,1);
+	sem_init(&customers,0,0);
+	sem_init(&barbers,0,1);
  
-/*Barber_thread initialization*/
-status=pthread_create(&id1,NULL,(void *)barber,NULL);
-if(status!=0)
-perror("create barbers is failure!\n");
-/*Customer_thread initialization*/
-status=pthread_create(&id2,NULL,(void *)customer,NULL);
-if(status!=0)
-perror("create customers is failure!\n");
+	/*Barber_thread initialization*/
+	status=pthread_create(&id1,NULL,(void *)barber,NULL);
+	if(status!=0)
+		perror("create barbers is failure!\n");
+	/*Customer_thread initialization*/
+	status=pthread_create(&id2,NULL,(void *)customer,NULL);
+	if(status!=0)
+		perror("create customers is failure!\n");
  
-/*Customer_thread first blocked*/
-pthread_join(id2,NULL);
-pthread_join(id1,NULL);
+	/*Customer_thread first blocked*/
+	pthread_join(id2,NULL);
+	pthread_join(id1,NULL);
  
-exit(0);
+	exit(0);
+}
+ 
+void barber(void *arg)/*Barber Process*/
+{
+	while(time(NULL)<end_time || count>0)
+	{
+		sem_wait(&customers);/*P(customers)*/            
+		sem_wait(&mutex);/*P(mutex)*/
+		count--;
+		printf("Barber:cut hair,count is:%d.\n",count);
+		sem_post(&mutex);/*V(mutex)*/
+		sem_post(&barbers);/*V(barbers)*/
+		sleep(3);       
+	}
+}
+ 
+void customer(void *arg)/*Customers Process*/
+{
+	while(time(NULL)<end_time)
+	{
+		sem_wait(&mutex);/*P(mutex)*/
+		if(count<N)
+		{
+			count++;
+			printf("Customer:add count,count is:%d\n",count);
+			sem_post(&mutex);/*V(mutex)*/
+			sem_post(&customer);/*V(customers)*/
+			sem_wait(&barbers);/*P(barbers)*/
+		}
+		else
+			/*V(mutex)*/
+			/*If the number is full of customers,just put the mutex lock let go*/
+			sem_post(&mutex);
+		sleep(1);
+	}
 }
