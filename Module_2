@@ -29,11 +29,11 @@ main()
           case 0 :
             cust_comes();
             
-   //         system("pause");
+   // system("pause");
             break;
           case 1:
             check_barber_status();
-     //       system("pause");
+     // system("pause");
             break;
           case 2:
             barber_finishing_work();
@@ -177,7 +177,7 @@ void check_barber_status()
               if(choice==2)
                 printf("\n\t 1. New customer come for hair cut \n\t 2. Simply Check the status of Barber \n\t%c [3]. Let Barber finish the customer (one customer at a time) \n\t 4. Exit \n\t ",219);
               if(choice==3)
-                printf("\n\t 1. New customer come for hair cut \n\t 2. Simply Check the status of Barber \n\t 3. Let Barber finish the customer (one customer at a time)  \n\t%c [4]. Exit",219);
+                printf("\n\t 1. New customer come for hair cut \n\t 2. Simply Check the status of Barber \n\t 3. Let Barber finish the customer (one customer at a time) \n\t%c [4]. Exit",219);
               
        }
      
