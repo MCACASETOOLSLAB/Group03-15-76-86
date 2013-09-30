@@ -10,6 +10,7 @@ time_t current_time,start_time;
 int check_sits_avail();
 void check_barber_status();
 void cust_comes();
+void cus_count();
 
 
 //////////// MAIN Function //////////////
@@ -36,6 +37,7 @@ main()
             break;
           case 2:
             barber_finishing_work();
+            cus_count();
             system("pause");
             break;
           case 3:
@@ -115,7 +117,12 @@ void check_barber_status()
  }
  
  
- 
+ void cus_count()
+ {
+ static int count=0;
+ count++;
+ printf("\n Number of customers arrived= %d",count);
+ }
  
  //////////////////// Function for User interface /////////
  
