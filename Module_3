@@ -1,4 +1,4 @@
-// Module 3 of sleeping-Barber Problem
+// Modules of sleeping-Barber Problem
 #include<stdio.h>
 #include<conio.h>
 #include <time.h>
@@ -6,7 +6,7 @@
 #define total_no_of_sits 5;
 int status,waiting_cust;
 time_t current_time,start_time;
-void barber_finishing_work();
+ void barber_finishing_work();
 int check_sits_avail();
 void check_barber_status();
 void cust_comes();
@@ -67,7 +67,7 @@ void cust_comes()
     
    if(sits_availble==5)
    {
-     printf(" \n\t WAIT...... \n\t Customer is going to awake barber");
+     printf(" \n\t ***** WELCOME ***** \n\t Customer got entry in the shop \n\t WAIT...... \n\t Customer is going to awake barber");
      sleep(1000);
      printf("\n\t Barber Has come to his work");
      waiting_cust=5-sits_availble+1;
@@ -77,7 +77,7 @@ void cust_comes()
    else
    {
      waiting_cust=5-sits_availble+1;
-     printf("\n\t This Customer has to wait for %d customer in Queue ",(waiting_cust-1));
+     printf("\n\t ***** WELCOME ***** \n\t Customer got entry in the shop \n\t This Customer has to wait for %d customer in Queue ",(waiting_cust-1));
      
    }
 }
@@ -102,7 +102,7 @@ void check_barber_status()
       int start_time_int,current_time_int;
       int sits_available=5-waiting_cust;
     
-  if(sits_available>5)
+  if(sits_available>=5)
      printf("\n\t Barber is sleeping.... \n\t There is no customer in the Queue");
     
   if(sits_available==4)
@@ -113,6 +113,8 @@ void check_barber_status()
 
 }
 
+
+/////////// let to do work barber ///////////
  void barber_finishing_work()
  {
     if(waiting_cust>1)
@@ -144,8 +146,8 @@ void check_barber_status()
      printf("\n\t ********************************");
            printf("\n\t Sleeping Barber Problem Solution");
            printf("\n\t ********************************");
-          
-     printf("\n\t%c [1]. New customer come for hair cut \n\t 2. Simply Check the status of Barber \n\t 3. Barber is cutting hair of one customer at a time \n\t 4. Exit \n\t ",219);
+          printf("\n\t You can use arrow key to move up/down in the options\n");
+     printf("\n\t%c [1]. New customer come for hair cut \n\t 2. Simply Check the status of Barber \n\t 3. Let Barber finish the customer (one customer at a time) \n\t 4. Exit \n\t ",219);
     while(1)
        {
            fflush(stdin);
@@ -154,6 +156,7 @@ void check_barber_status()
           printf("\n\t ********************************");
            printf("\n\t Sleeping Barber Problem Solution");
            printf("\n\t ********************************");
+           printf("\n\t You can use arrow key to move up/down in the options\n");
           
           if(ch==13)
            break;
@@ -168,17 +171,16 @@ void check_barber_status()
            
            
               if(choice==0)
-                printf("\n\t%c [1]. New customer come for hair cut \n\t 2. Simply Check the status of Barber \n\t 3. Barber is cutting hair of one customer at a time \n\t 4. Exit \n\t ",219);
+                printf("\n\t%c [1]. New customer come for hair cut \n\t 2. Simply Check the status of Barber \n\t 3. Let Barber finish the customer (one customer at a time) \n\t 4. Exit \n\t ",219);
               if(choice==1)
-                printf("\n\t 1. New customer come for hair cut \n\t%c [2]. Simply Check the status of Barber \n\t 3. Barber is cutting hair of one customer at a time \n\t 4. Exit \n\t ",219);
+                printf("\n\t 1. New customer come for hair cut \n\t%c [2]. Simply Check the status of Barber \n\t 3. Let Barber finish the customer (one customer at a time) \n\t 4. Exit \n\t ",219);
               if(choice==2)
-                printf("\n\t 1. New customer come for hair cut \n\t 2. Simply Check the status of Barber \n\t%c [3]. Barber is cutting hair of one customer at a time \n\t 4. Exit \n\t ",219);
+                printf("\n\t 1. New customer come for hair cut \n\t 2. Simply Check the status of Barber \n\t%c [3]. Let Barber finish the customer (one customer at a time) \n\t 4. Exit \n\t ",219);
               if(choice==3)
-                printf("\n\t 1. New customer come for hair cut \n\t 2. Simply Check the status of Barber \n\t 3. Barber is cutting hair of one customer at a time \n\t%c [4]. Exit",219);
+                printf("\n\t 1. New customer come for hair cut \n\t 2. Simply Check the status of Barber \n\t 3. Let Barber finish the customer (one customer at a time)  \n\t%c [4]. Exit",219);
               
        }
      
      return choice;
-     
      
  }
