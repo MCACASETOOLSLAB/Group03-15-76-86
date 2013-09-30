@@ -1,0 +1,186 @@
+// Modules of sleeping-Barber Problem
+#include<stdio.h>
+#include<conio.h>
+#include <time.h>
+
+#define total_no_of_sits 5;
+int status,waiting_cust;
+time_t current_time,start_time;
+ void barber_finishing_work();
+int check_sits_avail();
+void check_barber_status();
+void cust_comes();
+void cus_count();
+
+
+//////////// MAIN Function //////////////
+
+main()
+{
+    waiting_cust=0;
+    int choice=1;
+       
+       while(1)
+       {
+          choice=select();
+            
+        switch(choice)
+          {
+          case 0 :
+            cust_comes();
+            
+   // system("pause");
+            break;
+          case 1:
+            check_barber_status();
+     // system("pause");
+            break;
+          case 2:
+            barber_finishing_work();
+            //cus_count();
+            //system("pause");
+            break;
+          case 3:
+              exit(1);
+          default:
+              printf("\n\t Wrong Choice \n");
+          
+       }
+     getch();
+   }
+    
+    
+    getch();
+}
+
+///////////// Function for customer when he wanted to enter the shop ////////
+void cust_comes()
+{
+    int sits_availble=0;
+    sits_availble=check_sits_avail();
+   if(sits_availble<=0)
+   {
+      printf("\n\t Customer Must have to go back to his home \n\t Because there is no empty sit in the shop");
+      return;
+    }
+    
+    
+   if(sits_availble==5)
+   {
+     printf(" \n\t ***** WELCOME ***** \n\t Customer got entry in the shop \n\t WAIT...... \n\t Customer is going to awake barber");
+     sleep(1000);
+     printf("\n\t Barber Has come to his work");
+     waiting_cust=5-sits_availble+1;
+     sleep(1000);
+     printf("\n\t This Customer has to wait for %d Customer in Queue ",(waiting_cust-1));
+   }
+   else
+   {
+     waiting_cust=5-sits_availble+1;
+     printf("\n\t ***** WELCOME ***** \n\t Customer got entry in the shop \n\t This Customer has to wait for %d customer in Queue ",(waiting_cust-1));
+     
+   }
+}
+
+///////////// customer checks wether sit is available or not
+
+int check_sits_avail(char *start_time_string, char *current_time_string)
+{
+      int sits_available=0;
+     
+      sits_available=5-waiting_cust;
+     if(sits_available<=5)
+        return sits_available;
+        
+    return 5;
+}
+
+//////////// Only for wathing the status of barber that what barber is doing
+ 
+void check_barber_status()
+{
+      int start_time_int,current_time_int;
+      int sits_available=5-waiting_cust;
+    
+  if(sits_available>=5)
+     printf("\n\t Barber is sleeping.... \n\t There is no customer in the Queue");
+    
+  if(sits_available==4)
+     printf("\n\t Barber is working for Last Customer.... \n\t Barber will be going to sleep after finishing this customer \n\t There is no customer in the Queue");
+
+  if(sits_available>=1 && sits_available<4)
+     printf("\n\t Barber is working for %d Customer.... \n\t There is/are %d customer(s) in the Queue ",5-(int)sits_available,4-(int)sits_available);
+
+}
+
+
+/////////// let to do work barber ///////////
+ void barber_finishing_work()
+ {
+    if(waiting_cust>1)
+      printf("\n\t Barber has finished one Customer \n\t %d Customer(s) is/are remaining",--waiting_cust);
+    else if(waiting_cust==1)
+      {
+       printf("\n\t Barber has finished last Customer \n\t Now Barber is going to sleep");
+       waiting_cust--;
+       }
+    else
+       printf("\n\t Barber is sleeping now he is having no work to do");
+ }
+ 
+ 
+ void cus_count()
+ {
+ static int count=0;
+ count++;
+ printf("\n Number of customers arrived= %d",count);
+ }
+ 
+ //////////////////// Function for User interface /////////
+ 
+ int select()
+ {
+     int choice=0;
+     char ch;
+     system("cls");
+     printf("\n\t ********************************");
+           printf("\n\t Sleeping Barber Problem Solution");
+           printf("\n\t ********************************");
+          printf("\n\t You can use arrow key to move up/down in the options\n");
+     printf("\n\t%c [1]. New customer come for hair cut \n\t 2. Simply Check the status of Barber \n\t 3. Let Barber finish the customer (one customer at a time) \n\t 4. Exit \n\t ",219);
+    while(1)
+       {
+           fflush(stdin);
+           ch=getch();
+          system("cls");
+          printf("\n\t ********************************");
+           printf("\n\t Sleeping Barber Problem Solution");
+           printf("\n\t ********************************");
+           printf("\n\t You can use arrow key to move up/down in the options\n");
+          
+          if(ch==13)
+           break;
+          if(ch=='\t'||ch==80)
+            choice=(choice+1)%4;
+          if(choice==0 && ch==72 || ch==-108)
+           choice=4;
+          if(choice>0 && ch==72 || ch==-108)
+           choice--;
+          if(ch<='4'&&ch>='1')
+            choice=ch-49;
+           
+           
+              if(choice==0)
+                printf("\n\t%c [1]. New customer come for hair cut \n\t 2. Simply Check the status of Barber \n\t 3. Let Barber finish the customer (one customer at a time) \n\t 4. Exit \n\t ",219);
+              if(choice==1)
+                printf("\n\t 1. New customer come for hair cut \n\t%c [2]. Simply Check the status of Barber \n\t 3. Let Barber finish the customer (one customer at a time) \n\t 4. Exit \n\t ",219);
+              if(choice==2)
+                printf("\n\t 1. New customer come for hair cut \n\t 2. Simply Check the status of Barber \n\t%c [3]. Let Barber finish the customer (one customer at a time) \n\t 4. Exit \n\t ",219);
+              if(choice==3)
+                printf("\n\t 1. New customer come for hair cut \n\t 2. Simply Check the status of Barber \n\t 3. Let Barber finish the customer (one customer at a time) \n\t%c [4]. Exit",219);
+              
+       }
+     
+     return choice;
+     
+ }
