@@ -1,0 +1,70 @@
+// Module 1 of sleeping-Barber Problem
+
+#include<stdio.h>
+#include<conio.h>
+#include <time.h>
+
+#define total_no_of_sits 5;
+int status,waiting_cust;
+time_t current_time,start_time;
+
+int check_sits_avail(char *, char *);
+
+void cust_comes();
+
+main()
+{
+    time(&start_time);
+    waiting_cust=0;
+    cust_comes();
+    getch();
+}
+
+void cust_comes()
+{
+    char temp_time;
+    int sits_availble=0;
+    time(&current_time);
+    sits_availble=check_sits_avail(ctime(&start_time),ctime(&current_time));
+   if(sits_availble<=0)
+   {
+      printf(" Customer Must have to go back to his home");
+      return;
+    }   
+    
+    
+   if(sits_availble==5)
+   {
+     printf(" \n\t WAIT...... \n\t Customer is going to awake barber");
+     sleep(1000);
+     printf("\n\t Barber Has come to his work");
+     time(&start_time);
+     waiting_cust=5-sits_availble+1;
+     printf("\n\t Customer has to wait for %d seconds in Queue ",(waiting_cust-1)*5);
+   }
+   else
+   {
+     time(&start_time);
+     waiting_cust=5-sits_availble+1;
+     printf("\n\t Customer has to wait for %d seconds in Queue ",(waiting_cust-1)*5);
+     
+   }    
+}
+
+
+int check_sits_avail(char *start_time_string, char *current_time_string)
+{  
+      int start_time_int,current_time_int,sits_available=0;
+    
+      start_time_int=((start_time_string[11]-48)*10+(start_time_string[12]-48))*60+(start_time_string[14]-48)*10+(start_time_string[15]-48);
+      
+      current_time_int=((current_time_string[11]-48)*10+(current_time_string[12]-48))*60+(current_time_string[14]-48)*10+(current_time_string[15]-48);
+    
+      sits_available=5-waiting_cust+(current_time_int-start_time_int)/5;
+     if(sits_available<=5)
+        return sits_available;
+        
+    return 5;
+}
+
+
